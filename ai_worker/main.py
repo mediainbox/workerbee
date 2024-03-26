@@ -318,7 +318,7 @@ class WorkerMain:
         connect_msg = ConnectMessage(
             worker_version=VERSION,
             capabilities=caps,
-            device_name=os.getenv("BALENA_DEVICE_NAME_AT_INIT", str(uuid.uuid4())),
+            balena_device_name=os.getenv("BALENA_DEVICE_NAME_AT_INIT", str(uuid.uuid4())),
             ln_url=self.conf.ln_address,  # todo: remove eventually
             pubkey=self.pubkey,
             slug=self.slug,
