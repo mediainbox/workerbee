@@ -71,6 +71,7 @@ class GpuInfo(BaseModel):
 class ConnectMessage(BaseModel):
     worker_version: str
     capabilities: list[str]
+    balena_device_name: str
     pubkey: str
     slug: str = ""
     sig: str = ""
