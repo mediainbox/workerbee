@@ -10,6 +10,7 @@ import platform
 import sys
 import tempfile
 import time
+import uuid
 from hashlib import sha256, md5
 from pprint import pprint
 from typing import Optional, List, Literal, Any
@@ -317,6 +318,7 @@ class WorkerMain:
         connect_msg = ConnectMessage(
             worker_version=VERSION,
             capabilities=caps,
+            device_name=os.getenv("BALENA_DEVICE_NAME_AT_INIT", str(uuid.uuid4())),
             ln_url=self.conf.ln_address,  # todo: remove eventually
             pubkey=self.pubkey,
             slug=self.slug,
