@@ -1,0 +1,16 @@
+services:
+  workerbee:
+    image: mediainbox/workerbee:latest
+    environment:
+      QUEEN_URL: "wss://queenbee-production.up.railway.app/worker"
+      BALENA_DEVICE_NAME: "edge-ml-1"
+      HF_HOME: "/cache"
+    volumes:
+      - "/cache:/cache"
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            count: 2
+            capabilities: [gpu]
