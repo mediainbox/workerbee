@@ -99,23 +99,23 @@ def download_gguf(name):
     #       don't rely on cache, use our own
     #       remove ggml/tmp/etc
     #       add conversions for pth
-
+    token = os.getenv("HF_TOKEN", os.getenv("HUGGINGFACE_TOKEN")) or False
     if typ == "pytorch":
         log.debug("downloading...")
         # use hf so we get a free cache
-        path = snapshot_download(repo_id=repo_id, resume_download=True)
+        path = snapshot_download(repo_id=repo_id, resume_download=True, token=token)
         return pytorch_to_gguf(path)
 
     if typ == "ggml":
         base = os.path.basename(fil["name"])
         log.debug("downloading...")
         # use hf so we get a free cache
-        path = hf_hub_download(repo_id=repo_id, filename=base, resume_download=True)
+        path = hf_hub_download(repo_id=repo_id, filename=base, resume_download=True, token=token)
         return convert_to_gguf(path)
 
     base = os.path.basename(fil["name"])
     log.debug("downloading...")
-    return hf_hub_download(repo_id=repo_id, filename=base)
+    return hf_hub_download(repo_id=repo_id, filename=base, token=token)
 
 
 def get_model_abbr(repo, fp):
