@@ -57,7 +57,8 @@ def pick_file(name):
     else:
         hf, filt = parts
 
-    fs = HfFileSystem()
+    token = os.getenv("HF_TOKEN", os.getenv("HUGGINGFACE_TOKEN"))
+    fs = HfFileSystem(token=token)
     lst = fs.ls(hf)
     if filt:
         # sometimes quantization binaries have extension like q_4, etc.
