@@ -112,6 +112,7 @@ class GGUFReader:
         self.fin = open(path, "rb")
         self.read_header()
         self.read_kv_data()
+        self.arch = self.kv_data.get("general.architecture", "unknown")
         self.read_tensor_info()
         self.skip_padding(self.fin, self.fin.tell())
 
@@ -223,7 +224,7 @@ class GGUFReader:
 
     def vram_estimate(self):
         tot_size = 0
-        context = self.kv_data.get("llama.context_length", 200)
+        context = self.kv_data.get(f"{self.arch}.context_length", 200)
         toks = self.kv_data.get("tokenizer.ggml.token_count", 10000)
 
         for ent in self.ti_info:
@@ -234,7 +235,7 @@ class GGUFReader:
         return tot_size + self.kv_size + 70000000 + (context * toks)
 
     def layers(self):
-        if blks := self.kv_data.get("llama.block_count"):
+        if blks := self.kv_data.get(f"{self.arch}.block_count"):
             return blks + 3
         return None
 
