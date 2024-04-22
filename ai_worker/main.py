@@ -292,6 +292,7 @@ class WorkerMain:
  
         settings = LlamaSettings(model=model_path, n_gpu_layers=await self.guess_layers(model_path), seed=-1,
                                  embedding=True, cache=True, port=8181,
+                                 n_ctx=0,
                                  main_gpu=self.conf.main_gpu, tensor_split=sp)
         self.llama = create_llama_app(settings)
         assert self.llama, "Load llama failed.   Try lowering layers."
